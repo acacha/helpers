@@ -62,3 +62,62 @@ if (!function_exists('git_user_name')) {
         return null;
     }
 }
+
+if (!function_exists('scape_single_quotes')) {
+    /**
+     * Scape single quotes for sed using \x27.
+     *
+     * @param string $str
+     *
+     * @return string
+     */
+    function scape_single_quotes($str)
+    {
+        return str_replace("'", '\\x27', $str);
+    }
+}
+
+
+if (!function_exists('add_text_into_file')) {
+    /**
+     * Insert text into file using mountpoint an sed command. Mountpoint is maintained at file for future uses.
+     *
+     * @param $mountpoint
+     * @param $textToAdd
+     * @param $file
+     * @return mixed
+     */
+    function add_text_into_file($mountpoint, $textToAdd, $file)
+    {
+        passthru(
+            'sed -i \'s/.*'.$mountpoint.'.*/ \ \ \ \ \ \ \ '. scape_single_quotes(preg_quote($textToAdd)).',\n \ \ \ \ \ \ \ '.$mountpoint.'/\' '. $file, $error);
+
+        return $error;
+    }
+}
+
+if (!function_exists('add_file_into_file')) {
+    /**
+     * Insert file into file using mountpoint.
+     *
+     * @param $mountpoint
+     * @param $fileToInsert
+     * @param $file
+     * @param null $outputFile
+     * @return mixed
+     */
+    function add_file_into_file($mountpoint, $fileToInsert,$file, $outputFile = null)
+    {
+        if ($outputFile != null) {
+            passthru(
+                'sed -e \'/'.$mountpoint.'/r'.$fileToInsert.'\' '.
+                $file.' > '.$outputFile, $error);
+        } else {
+            passthru(
+                'sed -i \'/'.$mountpoint.'/r'.$fileToInsert.'\' '.$file, $error);
+        }
+
+        return $error;
+    }
+}
+
