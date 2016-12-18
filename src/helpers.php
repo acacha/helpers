@@ -80,7 +80,7 @@ if (!function_exists('scape_single_quotes')) {
 
 if (!function_exists('add_text_into_file')) {
     /**
-     * Insert text into file using mountpoint an sed command. Mountpoint is maintained at file for future uses.
+     * Insert text into file using mountpoint and sed command. Mountpoint is maintained at file for future uses.
      *
      * @param $mountpoint
      * @param $textToAdd
