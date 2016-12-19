@@ -121,3 +121,28 @@ if (!function_exists('add_file_into_file')) {
     }
 }
 
+if (!function_exists('dot_path')) {
+    /**
+     * Converts regular path to dotted path.
+     *
+     * @param $path
+     * @return mixed
+     */
+    function dot_path($path)
+    {
+        return str_replace("/", ".", $path);
+    }
+}
+
+if (!function_exists('undot_path')) {
+    /**
+     * Converts dotted path to regular path.
+     *
+     * @param $path
+     * @return mixed
+     */
+    function undot_path($path)
+    {
+        return str_replace(".", "/", $path);
+    }
+}
