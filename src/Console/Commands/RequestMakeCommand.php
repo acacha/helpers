@@ -9,7 +9,7 @@ use Illuminate\Foundation\Console\RequestMakeCommand as BaseRequestMakeCommand;
  *
  * @package App\Console\Commands
  */
-abstract class RequestMakeCommand extends BaseRequestMakeCommand
+class RequestMakeCommand extends BaseRequestMakeCommand
 {
     use PackableGeneratorCommand;
 }
