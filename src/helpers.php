@@ -146,3 +146,21 @@ if (!function_exists('undot_path')) {
         return str_replace(".", "/", $path);
     }
 }
+
+if (!function_exists('check_connection')) {
+    /**
+     * Check database connection.
+     *
+     * @param $connection
+     * @return bool
+     */
+    function check_connection($connection)
+    {
+        try {
+            app()->make('db')->connection($connection)->getPdo();
+        } catch (\Exception $e) {
+            return false;
+        }
+        return true;
+    }
+}
