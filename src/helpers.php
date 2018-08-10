@@ -108,16 +108,22 @@ if (!function_exists('add_file_into_file')) {
      */
     function add_file_into_file($mountpoint, $fileToInsert,$file, $outputFile = null)
     {
-        if ($outputFile != null) {
-            passthru(
-                'sed -e \'/'.$mountpoint.'/r'.$fileToInsert.'\' '.
-                $file.' > '.$outputFile, $error);
-        } else {
-            passthru(
-                'sed -i \'/'.$mountpoint.'/r'.$fileToInsert.'\' '.$file, $error);
-        }
-
-        return $error;
+        // use PHP functions not sed because sed ist not installed on
+        // windows by default
+        $fileNewContent = str_replace($mountpoint, $mountpoint."\n".file_get_contents($fileToInsert), file_get_contents($file));
+        file_put_contents($file, $fileNewContent);
+        
+        return '';
+        
+//        if ($outputFile != null) {
+//            passthru(
+//                'sed -e \'/'.$mountpoint.'/r'.$fileToInsert.'\' '.$file.' > '.$outputFile, $error);
+//        } else {
+//            passthru(
+//                'sed -i \'/'.$mountpoint.'/r'.$fileToInsert.'\' '.$file, $error);
+//        }
+//
+//        return $error;
     }
 }
 
